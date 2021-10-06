@@ -24,16 +24,15 @@ jobs:
         docker build -t $REP .
         docker push $REP
     
-    - name: deploy to ask
-      uses: aliyun/ack-set-context@v1
+    - name: scp ssh pipelines
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
       with:
-        access-key-id: "${{ secrets.ASK_ACCESS_KEY_ID }}"
-        access-key-secret: "${{ secrets.ASK_ACCESS_KEY_SECRET }}"
-        cluster-id: "${{ secrets.ASK_CLUSTER_ID }}"
-
-    - name: Deploy
-      run: |
-        kubectl apply -f cd.yaml
-        kubectl get services -o wide
+        host: ${{ secrets.DC_HOST }}
+        user: ${{ secrets.DC_USER }}
+        pass: ${{ secrets.DC_PASS }}
+        scp: |
+          ./cd.yaml => "~/deploy/"
+        last_ssh: |
+          kubectl apply -f ~/deploy/cd.yaml
     
       

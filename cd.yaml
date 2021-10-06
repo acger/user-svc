@@ -6,7 +6,7 @@ metadata:
   labels:
     app: user-svc
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 5
   selector:
     matchLabels:
@@ -55,54 +55,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: user-svc-svc
+  name: user-svc
   namespace: default
 spec:
   ports:
     - port: 60001
   selector:
     app: user-svc
-
----
-
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: user-svc-hpa-c
-  namespace: default
-  labels:
-    app: user-svc-hpa-c
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: user-svc
-  minReplicas: 3
-  maxReplicas: 10
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        targetAverageUtilization: 80
-
----
-
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: user-svc-hpa-m
-  namespace: default
-  labels:
-    app: user-svc-hpa-m
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: user-svc
-  minReplicas: 3
-  maxReplicas: 10
-  metrics:
-    - type: Resource
-      resource:
-        name: memory
-        targetAverageUtilization: 80

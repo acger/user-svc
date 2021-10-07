@@ -31,8 +31,8 @@ jobs:
         user: ${{ secrets.DC_USER }}
         pass: ${{ secrets.DC_PASS }}
         scp: |
-          ./cd.yaml => "~/deploy/"
+          ./user-svc-cd.yaml => "~/deploy/"
         last_ssh: |
-          kubectl apply -f ~/deploy/cd.yaml
+          kubectl apply -f ~/deploy/user-svc-cd.yaml
     
       

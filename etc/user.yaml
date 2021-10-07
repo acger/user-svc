@@ -1,5 +1,5 @@
 Name: user.rpc
-ListenOn: 127.0.0.1:60001
+ListenOn: 127.0.0.1:8001
 Etcd:
   Hosts:
     - etcd.default.svc.cluster.local:2379

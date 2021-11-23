@@ -51,6 +51,7 @@ func (l *UserAddLogic) UserAdd(in *user.UserAddReq) (*user.UserAddRsp, error) {
 
 	ir := tx.Create(o)
 	if ir.Error != nil {
+		logx.Error("user-add-tx-error: ", ir.Error)
 		tx.Rollback()
 		return &user.UserAddRsp{Code: 1}, nil
 	}

@@ -7,7 +7,7 @@ import (
 	"github.com/acger/user-svc/internal/svc"
 	"github.com/acger/user-svc/model"
 	"github.com/acger/user-svc/user"
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/logx"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )

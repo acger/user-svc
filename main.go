@@ -3,19 +3,20 @@ package main
 import (
 	"flag"
 	"fmt"
-	"google.golang.org/grpc/reflection"
 
 	"github.com/acger/user-svc/internal/config"
 	"github.com/acger/user-svc/internal/server"
 	"github.com/acger/user-svc/internal/svc"
-	"github.com/acger/user-svc/user"
+	"github.com/acger/user-svc/pb/user"
 
-	"github.com/tal-tech/go-zero/core/conf"
-	"github.com/tal-tech/go-zero/zrpc"
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/core/service"
+	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/user.yaml", "the config file")
+var configFile = flag.String("f", "etc/main.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -27,7 +28,10 @@ func main() {
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		user.RegisterUserServer(grpcServer, srv)
-		reflection.Register(grpcServer)
+
+		if c.Mode == service.DevMode || c.Mode == service.TestMode {
+			reflection.Register(grpcServer)
+		}
 	})
 	defer s.Stop()
 

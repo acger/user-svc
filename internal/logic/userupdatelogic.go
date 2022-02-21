@@ -7,7 +7,7 @@ import (
 	"github.com/acger/user-svc/user"
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type UserUpdateLogic struct {

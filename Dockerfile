@@ -25,4 +25,4 @@ WORKDIR /app
 COPY --from=builder /app/main /app/main
 COPY --from=builder /app/etc /app/etc
 
-CMD ["./main", "-f", "etc/main.yaml"]
+CMD ["./main"]
